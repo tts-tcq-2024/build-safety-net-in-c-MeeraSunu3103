@@ -6,16 +6,18 @@
 #include <string.h>
 
 char getSoundexCode(char c) {
+    char returnValue;
     c = toupper(c);
     switch (c) {
-        case 'B': case 'F': case 'P': case 'V': return '1';
-        case 'C': case 'G': case 'J': case 'K': case 'Q': case 'S': case 'X': case 'Z': return '2';
-        case 'D': case 'T': return '3';
-        case 'L': return '4';
-        case 'M': case 'N': return '5';
-        case 'R': return '6';
-        default: return '0'; // For A, E, I, O, U, H, W, Y
+        case 'B': case 'F': case 'P': case 'V': returnValue = '1'; break;
+        case 'C': case 'G': case 'J': case 'K': case 'Q': case 'S': case 'X': case 'Z': returnValue = '2'; break;
+        case 'D': case 'T': returnValue = '3'; break;
+        case 'L': returnValue = '4'; break;
+        case 'M': case 'N': returnValue = '5'; break;
+        case 'R': returnValue = '6'; break;
+        default: returnValue = '0'; // For A, E, I, O, U, H, W, Y
     }
+    return returnValue;
 }
 
 void generateSoundex_ReplaceCharacters(const char *name, char *soundex) {
