@@ -15,7 +15,7 @@ TEST(SoudexTestsuite, ReplacesConsonantsWithAppropriateDigits) {
 }
 
 TEST(SoudexTestsuite, DropsAllVowels) {
-  char soundex[5], char soundex1[5];
+  char soundex[5], soundex1[5];
   
   generateSoundex("Cameroon", soundex);
   ASSERT_EQ(soundex,"C565");
