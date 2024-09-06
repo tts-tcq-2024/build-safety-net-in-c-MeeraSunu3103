@@ -30,7 +30,7 @@ void deleteCharFromStringByIndex(char *inputString, int charIndex) {
     inputString[i] = '\0';
 }
 
-/* Function Description: replace characters of the input string with their corresponding soundex encoding */
+/* Function Description: replaces all alphabet characters of the input string with their corresponding soundex encoding and ignores all non-alphabetic characters */
 /* Parameters:
       inputString - input string whose characters are to be replaced
       soundex - string with soundex code (intermediate)
@@ -38,11 +38,14 @@ void deleteCharFromStringByIndex(char *inputString, int charIndex) {
 void generateSoundex_ReplaceCharacters(const char *inputString, char *soundex) { 
     char soundexCode[26] = {'0','1','2','3','0','1','2','*','0','2','2','4','5','5','0','1','2','6','2','3','0','1','*','2','0','2'}; /* soundexCode - soundex encoding of each alphabet, accordin to alphabetical position */
     int len = strlen(inputString); /* len - length of the input string */
+    int sIndex = 0; /* sIndex - index of soundex at which the next code is to be inserted */
     
     for(int i = 0; i < len; ++i) {
-        soundex[i] = soundexCode[(toupper(inputString[i]) - 65)];
+        if(isalpha(inputString[i])) {
+            soundex[sIndex++] = soundexCode[(toupper(inputString[i]) - 65)];
+        }
     }
-    soundex[len] = '\0';
+    soundex[sIndex] = '\0';
 }
 
 
