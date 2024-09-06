@@ -12,4 +12,4 @@ TEST(SoudexTestsuite, ReplacesConsonantsWithAppropriateDigits) {
 //   char soundex[5];
 //   generateSoundex("Honeyman", soundex);
 //   ASSERT_EQ(soundex,"H555");
-}
+// }
