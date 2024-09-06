@@ -2,7 +2,7 @@
 #include "Soundex.h"
 
 TEST(SoudexTestsuite, ReplacesConsonantsWithAppropriateDigits) {
-  char soundex[5], char soundex1[5], soundex2[5];
+  char soundex[5], soundex1[5], soundex2[5];
   
   generateSoundex("Robert", soundex);
   ASSERT_EQ(soundex,"R163");
@@ -25,7 +25,7 @@ TEST(SoudexTestsuite, DropsAllVowels) {
 }
 
 TEST(SoudexTestsuite, DropsRepeatedAdjacentEncodings) {
-  char soundex[5], char soundex1[5], soundex2[5];
+  char soundex[5], soundex1[5], soundex2[5];
   
   generateSoundex("Mississippi", soundex);
   ASSERT_EQ(soundex,"M221");
@@ -38,7 +38,7 @@ TEST(SoudexTestsuite, DropsRepeatedAdjacentEncodings) {
 }
 
 TEST(SoudexTestsuite, DropsRepeatedAdjacentEncodingsSeparatedByHOrW) {
-  char soundex[5], char soundex1[5];
+  char soundex[5], soundex1[5];
   
   generateSoundex("Vanyn", soundex);
   ASSERT_EQ(soundex,"V550");
