@@ -25,22 +25,41 @@ void generateSoundex_ReplaceCharacters(const char *name, char *soundex) {
 }
 
 
-void generateSoundex_SimplifyAdjacentCharacters_CheckForHW(char *soundex) {
+int compareSubstringForHW(char *soundex, int index) {
+    char substr1[4], substr2[4] = "***";
+    
+    strncpy(substr1,soundex+(index-2),3);
+    substr1[3] = '\0';
+    
+    substr2[0] = soundex[index];
+    // substr2[1] = '*';
+    substr2[2] = soundex[index];
+    // substr2[3] = '\0'
+    
+    return (!strcmp(substr1, substr2));
+}
+
+void generateSoundex_SimplifyAdjacentCharactersSeparatedByHW(char *soundex) {
     int len  = strlen(soundex);
     for (int i = 2; i < len; ++i) {
-        if((soundex[i-1] == '*') && (soundex[i] == soundex[i-2])) {
+        if(compareSubstringForHW(soundex,i)) {
             deleteCharFromStringByIndex(soundex,i);
         }
     }
 }
 
-void generateSoundex_SimplifyAdjacentCharacters_CheckForRepeatedCharacters(char *soundex) {
+void generateSoundex_SimplifyRepeatedAdjacentCharacters(char *soundex) {
     int len = strlen(soundex);
+    int i = 1;
     
-    for (int i = 1; i < len; ++i) {
+    while(i < len) {
         if(soundex[i] == soundex[i-1]) {
             deleteCharFromStringByIndex(soundex,i);
+            --i;
+            --len;
         }
+            // printf("\n\t%d : %c : %s",i,soundex[i],soundex);
+        ++i;
     }
 }
 
@@ -62,10 +81,20 @@ void generateSoundex_AddZeroPadding(char *soundex) {
 
 void generateSoundex(const char *name, char *soundex) {
     generateSoundex_ReplaceCharacters(name, soundex);
-    generateSoundex_SimplifyAdjacentCharacters_CheckForHW(soundex);
-    generateSoundex_SimplifyAdjacentCharacters_CheckForRepeatedCharacters(soundex);
+    printf(soundex);
+    printf(" - ReplaceCharacters, len: %d\n", strlen(soundex));
+    generateSoundex_SimplifyAdjacentCharactersSeparatedByHW(soundex);
+    printf(soundex);
+    printf(" - SimplifyAdjacentCharactersSeparatedByHW, len: %d\n", strlen(soundex));
+    generateSoundex_SimplifyRepeatedAdjacentCharacters(soundex);
+    printf(soundex);
+    printf(" - SimplifyRepeatedAdjacentCharacters, len: %d\n", strlen(soundex));
     generateSoundex_RemoveVowels(soundex);
+    printf(soundex);
+    printf(" - RemoveVowels, len: %d\n", strlen(soundex));
     generateSoundex_AddZeroPadding(soundex);
+    printf(soundex);
+    printf(" - AddZeroPadding, len: %d\n", strlen(soundex));
     soundex[0] = toupper(name[0]);
     soundex[4] = '\0';
     
