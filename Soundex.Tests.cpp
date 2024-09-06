@@ -14,6 +14,15 @@ TEST(SoudexTestSuite, ReplacesConsonantsWithAppropriateDigits) {
   ASSERT_EQ(soundex2,"H555");
 }
 
+TEST(SoudexTestSuite, RetainsFirstCharacter) {
+  char soundex[5];
+  
+  generateSoundex("Meera", soundex);
+  ASSERT_EQ(soundex,"M600");
+  generateSoundex("aeiou", soundex);
+  ASSERT_EQ(soundex,"A000");
+}
+
 TEST(SoudexTestSuite, DropsAllVowels) {
   char soundex[5], soundex1[5];
   
