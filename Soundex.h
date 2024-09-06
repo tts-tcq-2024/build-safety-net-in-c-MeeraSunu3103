@@ -15,7 +15,6 @@ void generateSoundex_RemoveVowels(char *soundex);
 void generateSoundex_AddZeroPadding(char *soundex);
 void generateSoundex(const char *inputString, char *soundex);
 
-
 /* Function Description: delete the character at the given index from the given string */
 /* Parameters:
       inputString - string from which a character is to be deleted
