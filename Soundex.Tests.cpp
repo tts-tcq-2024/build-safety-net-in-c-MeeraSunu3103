@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include "Soundex.h"
 
-TEST(SoudexTestsuite, ReplacesConsonantsWithAppropriateDigits) {
+TEST(SoudexTestSuite, ReplacesConsonantsWithAppropriateDigits) {
   char soundex[5], soundex1[5], soundex2[5];
   
   generateSoundex("Robert", soundex);
@@ -14,7 +14,7 @@ TEST(SoudexTestsuite, ReplacesConsonantsWithAppropriateDigits) {
   ASSERT_EQ(soundex2,"H555");
 }
 
-TEST(SoudexTestsuite, DropsAllVowels) {
+TEST(SoudexTestSuite, DropsAllVowels) {
   char soundex[5], soundex1[5];
   
   generateSoundex("Cameroon", soundex);
@@ -24,7 +24,7 @@ TEST(SoudexTestsuite, DropsAllVowels) {
   ASSERT_EQ(soundex,soundex1);
 }
 
-TEST(SoudexTestsuite, DropsRepeatedAdjacentEncodings) {
+TEST(SoudexTestSuite, DropsRepeatedAdjacentEncodings) {
   char soundex[5], soundex1[5], soundex2[5];
   
   generateSoundex("Mississippi", soundex);
@@ -37,11 +37,41 @@ TEST(SoudexTestsuite, DropsRepeatedAdjacentEncodings) {
   ASSERT_EQ(soundex2,"P236");
 }
 
-TEST(SoudexTestsuite, DropsRepeatedAdjacentEncodingsSeparatedByHOrW) {
-  char soundex[5], soundex1[5];
+TEST(SoudexTestSuite, DropsRepeatedAdjacentEncodingsSeparatedByHOrW) {
+  char soundex[5];
   
   generateSoundex("Vanyn", soundex);
   ASSERT_EQ(soundex,"V550");
   generateSoundex("Vamyn", soundex);
   ASSERT_EQ(soundex,"V550");
+}
+
+TEST(SoudexTestSuite, RetainsRepeatedAdjacentEncodingsSeparatedByVowels) {
+  char soundex[5];
+  
+  generateSoundex("Halal", soundex);
+  ASSERT_EQ(soundex,"H440");
+}
+
+TEST(SoudexTestSuite, ProcessesEmptyString) {
+  char soundex[5];
+  
+  generateSoundex("", soundex);
+  ASSERT_EQ(soundex,"");
+}
+
+TEST(SoudexTestSuite, ProcessesLowercaseAndUppercaseAlphabets) {
+  char soundex[5];
+  
+  generateSoundex("McCormick", soundex);
+  ASSERT_EQ(soundex,"M265");
+}
+
+TEST(SoudexTestSuite, IgnoresNonAlphabeticCharacters) {
+  char soundex[5];
+  
+  generateSoundex("MeeraSunu3103!", soundex);
+  ASSERT_EQ(soundex,"M625");
+  generateSoundex("Van Dyke", soundex);
+  ASSERT_EQ(soundex,"V532");
 }
