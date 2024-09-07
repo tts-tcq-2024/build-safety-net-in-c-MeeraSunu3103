@@ -7,14 +7,13 @@
 
 /* Function Prototypes */
 void deleteCharFromStringByIndex(char *inputString, int charIndex);
-void removeNonAlphabeticCharacters(char *inputString);
-void generateSoundex_ReplaceCharacters(char *inputString, char *soundex);
+void generateSoundex_ReplaceCharacters(const char *inputString, char *soundex);
 int compareSubstringForHW(char *soundex, int index);
 void generateSoundex_SimplifyAdjacentCharactersSeparatedByHW(char *soundex);
 void generateSoundex_SimplifyRepeatedAdjacentCharacters(char *soundex);
 void generateSoundex_RemoveVowels(char *soundex);
 void generateSoundex_AddZeroPadding(char *soundex);
-void generateSoundex(char *inputString, char *soundex);
+void generateSoundex(const char *inputString, char *soundex);
 
 
 /* Function Description: delete the character at the given index from the given string */
@@ -31,39 +30,23 @@ void deleteCharFromStringByIndex(char *inputString, int charIndex) {
     inputString[i] = '\0';
 }
 
-/* Function Description: removes all non-alphabetic characters from the given string */
-/* Parameters:
-      inputString - string from which non-alphabetic characters is to be deleted
-*/
-void removeNonAlphabeticCharacters(char *inputString) {
-    int len = strlen(inputString);
-    char tempString[len];
-    int tsIndex = 0;
-    
-    for(int i = 0; i < len; ++i) {
-        if(isalpha(inputString[i])) {
-            tempString[tsIndex++] = inputString[i];
-        }
-    }
-    tempString[tsIndex] = '\0';
-    strcpy(inputString,tempString); 
-}
-
 /* Function Description: replace characters of the input string with their corresponding soundex encoding */
 /* Parameters:
       inputString - input string whose characters are to be replaced
       soundex - string with soundex code (intermediate)
 */
-void generateSoundex_ReplaceCharacters(char *inputString, char *soundex) { 
+void generateSoundex_ReplaceCharacters(const char *inputString, char *soundex) { 
     char soundexCode[26] = {'0','1','2','3','0','1','2','*','0','2','2','4','5','5','0','1','2','6','2','3','0','1','*','2','0','2'}; /* soundexCode - soundex encoding of each alphabet, accordin to alphabetical position */
     int sIndex = 0; /* sIndex - index of soundex at which the next code is to be inserted */
     int i = 0;
     
-    removeNonAlphabeticCharacters(inputString);
     while(inputString[i] != '\0') {
-        soundex[sIndex++] = soundexCode[(toupper(inputString[i]) - 65)];
+        if(isalpha(inputString[i])) {
+            soundex[sIndex++] = soundexCode[(toupper(inputString[i]) - 65)];
+        }
         ++i;
     }
+    
     soundex[sIndex] = '\0';
 }
 
@@ -141,7 +124,7 @@ void generateSoundex_AddZeroPadding(char *soundex) {
       inputString - input string whose soundex code is to be generated
       soundex - string with soundex code (intermediate)
 */
-void generateSoundex(char *inputString, char *soundex1) {
+void generateSoundex(const char *inputString, char *soundex1) {
     char soundex[strlen(inputString)];
     
     generateSoundex_ReplaceCharacters(inputString, soundex);
