@@ -71,9 +71,9 @@ void generateSoundex_SimplifyAdjacentCharactersSeparatedByHW(char *soundex) {
     while(soundex[i] != '\0') {
         if(compareSubstringForHW(soundex,i)) {
             deleteCharFromStringByIndex(soundex,i);
-            --i;
+        } else {
+            ++i;
         }
-        ++i;
     }
 }
 
@@ -86,9 +86,9 @@ void generateSoundex_SimplifyRepeatedAdjacentCharacters(char *soundex) {
     while(soundex[i] != '\0') {
         if(soundex[i] == soundex[i-1]) {
             deleteCharFromStringByIndex(soundex,i);
-            --i;
+        } else {
+            ++i;
         }
-        ++i;
     }
 }
 
@@ -101,9 +101,9 @@ void generateSoundex_RemoveVowels(char *soundex) {
     while(soundex[i] != '\0') {
         if((strchr("0*", soundex[i]))) {
             deleteCharFromStringByIndex(soundex,i);
-            --i;
+        } else {
+            ++i;
         }
-        ++i;
     }
 }
 
