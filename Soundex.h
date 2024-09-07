@@ -133,7 +133,8 @@ void generateSoundex(const char *inputString, char *soundex1) {
     generateSoundex_RemoveVowels(soundex);
     generateSoundex_AddZeroPadding(soundex);
     
-    soundex[0] = toupper(inputString[0]);
+    soundex[0] = toupper(inputString[0]);      
+    soundex[4] = '\0';
     strcpy(soundex1,soundex);
 }
 
