@@ -15,6 +15,7 @@ void generateSoundex_RemoveVowels(char *soundex);
 void generateSoundex_AddZeroPadding(char *soundex);
 void generateSoundex(const char *inputString, char *soundex);
 
+
 /* Function Description: delete the character at the given index from the given string */
 /* Parameters:
       inputString - string from which a character is to be deleted
@@ -29,21 +30,23 @@ void deleteCharFromStringByIndex(char *inputString, int charIndex) {
     inputString[i] = '\0';
 }
 
-/* Function Description: replaces all alphabet characters of the input string with their corresponding soundex encoding and ignores all non-alphabetic characters */
+/* Function Description: replace characters of the input string with their corresponding soundex encoding */
 /* Parameters:
       inputString - input string whose characters are to be replaced
       soundex - string with soundex code (intermediate)
 */
 void generateSoundex_ReplaceCharacters(const char *inputString, char *soundex) { 
     char soundexCode[26] = {'0','1','2','3','0','1','2','*','0','2','2','4','5','5','0','1','2','6','2','3','0','1','*','2','0','2'}; /* soundexCode - soundex encoding of each alphabet, accordin to alphabetical position */
-    int len = strlen(inputString); /* len - length of the input string */
     int sIndex = 0; /* sIndex - index of soundex at which the next code is to be inserted */
+    int i = 0;
     
-    for(int i = 0; i < len; ++i) {
+    while(inputString[i] != '\0') {
         if(isalpha(inputString[i])) {
             soundex[sIndex++] = soundexCode[(toupper(inputString[i]) - 65)];
         }
+        ++i;
     }
+    
     soundex[sIndex] = '\0';
 }
 
@@ -64,11 +67,13 @@ int compareSubstringForHW(char *soundex, int index) {
       soundex - string with soundex code (intermediate)
 */
 void generateSoundex_SimplifyAdjacentCharactersSeparatedByHW(char *soundex) {
-    int len  = strlen(soundex); /* len - current length of the soundex code */
-    for (int i = 2; i < len; ++i) {
+    int i = 2;
+    while(soundex[i] != '\0') {
         if(compareSubstringForHW(soundex,i)) {
             deleteCharFromStringByIndex(soundex,i);
+            --i;
         }
+        ++i;
     }
 }
 
@@ -77,14 +82,11 @@ void generateSoundex_SimplifyAdjacentCharactersSeparatedByHW(char *soundex) {
       soundex - string with soundex code (intermediate)
 */
 void generateSoundex_SimplifyRepeatedAdjacentCharacters(char *soundex) {
-    int len = strlen(soundex); /* len - current length of the soundex code */
     int i = 1;
-    
-    while(i < len) {
+    while(soundex[i] != '\0') {
         if(soundex[i] == soundex[i-1]) {
             deleteCharFromStringByIndex(soundex,i);
             --i;
-            --len;
         }
         ++i;
     }
@@ -95,11 +97,13 @@ void generateSoundex_SimplifyRepeatedAdjacentCharacters(char *soundex) {
       soundex - string with soundex code (intermediate)
 */
 void generateSoundex_RemoveVowels(char *soundex) {
-    int len = strlen(soundex); /* len - current length of the soundex code */
-    for (int i = 1; i < len; ++i) {
+    int i = 1;
+    while(soundex[i] != '\0') {
         if((strchr("0*", soundex[i]))) {
             deleteCharFromStringByIndex(soundex,i);
+            --i;
         }
+        ++i;
     }
 }
 
@@ -112,6 +116,7 @@ void generateSoundex_AddZeroPadding(char *soundex) {
     while(len < 4) {
         soundex[len++] = '0';
     }
+    soundex[len] = '\0';
 }
 
 /* Function Description: generates the soundex code for the given input string */
@@ -119,14 +124,17 @@ void generateSoundex_AddZeroPadding(char *soundex) {
       inputString - input string whose soundex code is to be generated
       soundex - string with soundex code (intermediate)
 */
-void generateSoundex(const char *inputString, char *soundex) {
+void generateSoundex(const char *inputString, char *soundex1) {
+    char soundex[strlen(inputString)];
+    
     generateSoundex_ReplaceCharacters(inputString, soundex);
     generateSoundex_SimplifyAdjacentCharactersSeparatedByHW(soundex);
     generateSoundex_SimplifyRepeatedAdjacentCharacters(soundex);
     generateSoundex_RemoveVowels(soundex);
     generateSoundex_AddZeroPadding(soundex);
+    
     soundex[0] = toupper(inputString[0]);
-    soundex[4] = '\0';    
+    strcpy(soundex1,soundex);
 }
 
 #endif // SOUNDEX_H
