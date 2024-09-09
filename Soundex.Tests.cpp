@@ -2,16 +2,44 @@
 #include "Soundex.h"
 
 TEST(SoudexTestSuite, ReplacesConsonantsWithAppropriateDigits) {
-  char soundex[5], soundex1[5], soundex2[5];
-  
-  generateSoundex("Robert", soundex);
-  ASSERT_STREQ(soundex,"R163");
-  generateSoundex("Ruperd", soundex1);
-  ASSERT_STREQ(soundex1,"R163");
-  ASSERT_STREQ(soundex,soundex1);
+  char soundex[5];
 
-  generateSoundex("Honeyman", soundex2);
-  ASSERT_STREQ(soundex2,"H555");
+  generateSoundex("ab", soundex);
+  ASSERT_STREQ(soundex,"A100");
+  generateSoundex("ac", soundex);
+  ASSERT_STREQ(soundex,"A200");
+  generateSoundex("ad", soundex);
+  ASSERT_STREQ(soundex,"A300");
+  generateSoundex("af", soundex);
+  ASSERT_STREQ(soundex,"A100");
+  generateSoundex("ag", soundex);
+  ASSERT_STREQ(soundex,"A200");
+  generateSoundex("aj", soundex);
+  ASSERT_STREQ(soundex,"A200");
+  generateSoundex("ak", soundex);
+  ASSERT_STREQ(soundex,"A200");
+  generateSoundex("al", soundex);
+  ASSERT_STREQ(soundex,"A400");
+  generateSoundex("am", soundex);
+  ASSERT_STREQ(soundex,"A500");
+  generateSoundex("an", soundex);
+  ASSERT_STREQ(soundex,"A500");
+  generateSoundex("ap", soundex);
+  ASSERT_STREQ(soundex,"A100");
+  generateSoundex("aq", soundex);
+  ASSERT_STREQ(soundex,"A200");
+  generateSoundex("ar", soundex);
+  ASSERT_STREQ(soundex,"A600");
+  generateSoundex("as", soundex);
+  ASSERT_STREQ(soundex,"A200");
+  generateSoundex("at", soundex);
+  ASSERT_STREQ(soundex,"A300");
+  generateSoundex("av", soundex);
+  ASSERT_STREQ(soundex,"A100");
+  generateSoundex("ax", soundex);
+  ASSERT_STREQ(soundex,"A200");
+  generateSoundex("az", soundex);
+  ASSERT_STREQ(soundex,"A200");
 }
 
 TEST(SoudexTestSuite, RetainsFirstCharacter) {
@@ -19,7 +47,7 @@ TEST(SoudexTestSuite, RetainsFirstCharacter) {
   
   generateSoundex("Meera", soundex);
   ASSERT_STREQ(soundex,"M600");
-  generateSoundex("aeiou", soundex);
+  generateSoundex("aeiouyhw", soundex);
   ASSERT_STREQ(soundex,"A000");
 }
 
@@ -73,6 +101,16 @@ TEST(SoudexTestSuite, PadsWithZerosIfLengthIsLessThanFour) {
   ASSERT_STREQ(soundex,"A120");
   generateSoundex("abcd", soundex);
   ASSERT_STREQ(soundex,"A123");
+}
+
+TEST(SoudexTestSuite, GivesSameSoundexCodeForSimilarInputStrings) {
+  char soundex[5], soundex1[5];
+  
+  generateSoundex("Robert", soundex);
+  ASSERT_STREQ(soundex,"R163");
+  generateSoundex("Ruperd", soundex1);
+  ASSERT_STREQ(soundex1,"R163");
+  ASSERT_STREQ(soundex,soundex1);
 }
 
 TEST(SoudexTestSuite, ProcessesEmptyString) {
