@@ -50,9 +50,9 @@ TEST(SoudexTestSuite, DropsRepeatedAdjacentEncodingsSeparatedByHOrW) {
   char soundex[5];
   
   generateSoundex("Vanhn", soundex);
-  ASSERT_STREQ(soundex,"V550");
+  ASSERT_STREQ(soundex,"V500");
   generateSoundex("Vamhn", soundex);
-  ASSERT_STREQ(soundex,"V550");
+  ASSERT_STREQ(soundex,"V500");
 }
 
 TEST(SoudexTestSuite, RetainsRepeatedAdjacentEncodingsSeparatedByVowels) {
