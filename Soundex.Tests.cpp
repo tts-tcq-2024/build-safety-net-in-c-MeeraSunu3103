@@ -65,8 +65,14 @@ TEST(SoudexTestSuite, RetainsRepeatedAdjacentEncodingsSeparatedByVowels) {
 TEST(SoudexTestSuite, PadsWithZerosIfLengthIsLessThanFour) {
   char soundex[5];
   
-  generateSoundex("A", soundex);
+  generateSoundex("a", soundex);
   ASSERT_STREQ(soundex,"A000");
+  generateSoundex("ab", soundex);
+  ASSERT_STREQ(soundex,"A100");
+  generateSoundex("abc", soundex);
+  ASSERT_STREQ(soundex,"A120");
+  generateSoundex("abcd", soundex);
+  ASSERT_STREQ(soundex,"A123");
 }
 
 TEST(SoudexTestSuite, ProcessesEmptyString) {
@@ -90,4 +96,11 @@ TEST(SoudexTestSuite, IgnoresNonAlphabeticCharacters) {
   ASSERT_STREQ(soundex,"M625");
   generateSoundex("Van Dyke", soundex);
   ASSERT_STREQ(soundex,"V532");
+}
+
+TEST(SoudexTestSuite, ProcessesLargeInputStrings) {
+  char soundex[5];
+  
+  generateSoundex("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.", soundex);
+  ASSERT_STREQ(soundex,"L651");
 }
