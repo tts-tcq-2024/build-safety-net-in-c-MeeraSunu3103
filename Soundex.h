@@ -15,6 +15,7 @@ void generateSoundex_RemoveVowels(char *soundex);
 void generateSoundex_AddZeroPadding(char *soundex);
 void generateSoundex(const char *inputString, char *soundex);
 
+ static const char soundexCode[26] = {'0','1','2','3','0','1','2','*','0','2','2','4','5','5','0','1','2','6','2','3','0','1','*','2','0','2'}; /* soundexCode - soundex encoding of each alphabet, accordin to alphabetical position */
 
 /* Function Description: delete the character at the given index from the given string */
 /* Parameters:
@@ -36,7 +37,6 @@ void deleteCharFromStringByIndex(char *inputString, int charIndex) {
       soundex - string with soundex code (intermediate)
 */
 void generateSoundex_ReplaceCharacters(const char *inputString, char *soundex) { 
-    char soundexCode[26] = {'0','1','2','3','0','1','2','*','0','2','2','4','5','5','0','1','2','6','2','3','0','1','*','2','0','2'}; /* soundexCode - soundex encoding of each alphabet, accordin to alphabetical position */
     int sIndex = 0; /* sIndex - index of soundex at which the next code is to be inserted */
     int i = 0;
     
