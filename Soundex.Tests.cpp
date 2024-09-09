@@ -98,9 +98,12 @@ TEST(SoudexTestSuite, IgnoresNonAlphabeticCharacters) {
   ASSERT_STREQ(soundex,"V532");
 }
 
-TEST(SoudexTestSuite, ProcessesLargeInputStrings) {
-  char soundex[5];
+TEST(SoudexTestSuite, TruncatesLargeInputStrings) {
+  char soundex[5],soundex1[5];
   
   generateSoundex("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.", soundex);
-  ASSERT_STREQ(soundex,"L651");
+  ASSERT_STREQ(soundex,"L651");  
+  generateSoundex("Lorem ipsum", soundex1);
+  ASSERT_STREQ(soundex1,"L651");
+  ASSERT_STREQ(soundex,soundex1);
 }
