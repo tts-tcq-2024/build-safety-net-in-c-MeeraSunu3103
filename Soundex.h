@@ -125,17 +125,19 @@ void generateSoundex_AddZeroPadding(char *soundex) {
       soundex - string with soundex code (intermediate)
 */
 void generateSoundex(const char *inputString, char *soundex1) {
-    char soundex[strlen(inputString)];
-    
-    generateSoundex_ReplaceCharacters(inputString, soundex);
-    generateSoundex_SimplifyAdjacentCharactersSeparatedByHW(soundex);
-    generateSoundex_SimplifyRepeatedAdjacentCharacters(soundex);
-    generateSoundex_RemoveVowels(soundex);
-    generateSoundex_AddZeroPadding(soundex);
-    
-    soundex[0] = toupper(inputString[0]);      
-    soundex[4] = '\0';
-    strcpy(soundex1,soundex);
+    if(strlen(inputString) == 0) {
+        soundex1 = "";
+    } else {
+        char soundex[strlen(inputString)];
+        generateSoundex_ReplaceCharacters(inputString, soundex);        
+        generateSoundex_SimplifyAdjacentCharactersSeparatedByHW(soundex);        
+        generateSoundex_SimplifyRepeatedAdjacentCharacters(soundex);        
+        generateSoundex_RemoveVowels(soundex);        
+        generateSoundex_AddZeroPadding(soundex);
+        soundex[0] = toupper(inputString[0]);      
+        soundex[4] = '\0';
+        strcpy(soundex1,soundex);
+    }
 }
 
 #endif // SOUNDEX_H
