@@ -147,7 +147,7 @@ void generateSoundex(const char *inputString, char *soundex) {
         generateSoundex_SimplifyRepeatedAdjacentCharacters(soundexTemp);        
         generateSoundex_RemoveVowels(soundexTemp);        
         generateSoundex_AddZeroPadding(soundexTemp);
-        soundex[0] = toupper(inputString[0]); /* First character of the input string is retained */
+        soundexTemp[0] = toupper(inputString[0]); /* First character of the input string is retained */
 
         /* copy the final soundex code into the function argument */
         strcpy(soundex,soundexTemp);
