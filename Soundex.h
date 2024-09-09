@@ -13,9 +13,11 @@ void generateSoundex_SimplifyAdjacentCharactersSeparatedByHW(char *soundex);
 void generateSoundex_SimplifyRepeatedAdjacentCharacters(char *soundex);
 void generateSoundex_RemoveVowels(char *soundex);
 void generateSoundex_AddZeroPadding(char *soundex);
+int calculateSoundexStartingLength(const char *inputString);
 void generateSoundex(const char *inputString, char *soundex);
 
- static const char soundexCode[26] = {'0','1','2','3','0','1','2','*','0','2','2','4','5','5','0','1','2','6','2','3','0','1','*','2','0','2'}; /* soundexCode - soundex encoding of each alphabet, accordin to alphabetical position */
+/* soundexCode - soundex encoding of each alphabet, accordin to alphabetical position */
+static const char soundexCode[26] = {'0','1','2','3','0','1','2','*','0','2','2','4','5','5','0','1','2','6','2','3','0','1','*','2','0','2'}; 
 
 /* Function Description: delete the character at the given index from the given string */
 /* Parameters:
@@ -116,7 +118,15 @@ void generateSoundex_AddZeroPadding(char *soundex) {
     while(len < 4) {
         soundex[len++] = '0';
     }
-    soundex[len] = '\0';
+    soundex[4] = '\0';
+}
+
+/* Function Description: calculates the required length of the intermediate soundex code string */
+/* Parameters:
+      inputString - string whose soundex is to be calculated
+*/
+int calculateSoundexStartingLength(const char *inputString) {
+    return (strlen(inputString) < 5) ? 5 : strlen(inputString);
 }
 
 /* Function Description: generates the soundex code for the given input string */
@@ -124,19 +134,23 @@ void generateSoundex_AddZeroPadding(char *soundex) {
       inputString - input string whose soundex code is to be generated
       soundex - string with soundex code (intermediate)
 */
-void generateSoundex(const char *inputString, char *soundex1) {
+void generateSoundex(const char *inputString, char *soundex) {
+    /* check for empty string */
     if(strlen(inputString) == 0) {
-        soundex1 = "";
+        strcpy(soundex,"\0");
     } else {
-        char soundex[strlen(inputString)];
-        generateSoundex_ReplaceCharacters(inputString, soundex);        
-        generateSoundex_SimplifyAdjacentCharactersSeparatedByHW(soundex);        
-        generateSoundex_SimplifyRepeatedAdjacentCharacters(soundex);        
-        generateSoundex_RemoveVowels(soundex);        
-        generateSoundex_AddZeroPadding(soundex);
-        soundex[0] = toupper(inputString[0]);      
-        soundex[4] = '\0';
-        strcpy(soundex1,soundex);
+        /* creating a temporary soundex string to hold indermediate soundex code */
+        char soundexTemp[calculateSoundexStartingLength(inputString)];
+       
+        generateSoundex_ReplaceCharacters(inputString, soundexTemp);        
+        generateSoundex_SimplifyAdjacentCharactersSeparatedByHW(soundexTemp);        
+        generateSoundex_SimplifyRepeatedAdjacentCharacters(soundexTemp);        
+        generateSoundex_RemoveVowels(soundexTemp);        
+        generateSoundex_AddZeroPadding(soundexTemp);
+        soundex[0] = toupper(inputString[0]); /* First character of the input string is retained */
+
+        /* copy the final soundex code into the function argument */
+        strcpy(soundex,soundexTemp);
     }
 }
 
