@@ -49,9 +49,9 @@ TEST(SoudexTestSuite, DropsRepeatedAdjacentEncodings) {
 TEST(SoudexTestSuite, DropsRepeatedAdjacentEncodingsSeparatedByHOrW) {
   char soundex[5];
   
-  generateSoundex("Vanyn", soundex);
+  generateSoundex("Vanhn", soundex);
   ASSERT_EQ(soundex,"V550");
-  generateSoundex("Vamyn", soundex);
+  generateSoundex("Vamhn", soundex);
   ASSERT_EQ(soundex,"V550");
 }
 
