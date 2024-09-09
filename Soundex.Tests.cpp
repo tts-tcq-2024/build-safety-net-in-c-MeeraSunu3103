@@ -62,6 +62,13 @@ TEST(SoudexTestSuite, RetainsRepeatedAdjacentEncodingsSeparatedByVowels) {
   ASSERT_EQ(soundex,"H440");
 }
 
+TEST(SoudexTestSuite, PadsWithZerosIfLengthIsLessThanFour) {
+  char soundex[5];
+  
+  generateSoundex("A", soundex);
+  ASSERT_EQ(soundex,"A000");
+}
+
 TEST(SoudexTestSuite, ProcessesEmptyString) {
   char soundex[5];
   
